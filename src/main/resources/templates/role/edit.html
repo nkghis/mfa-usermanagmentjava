@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Authentification Bootstrap 4 Spring Boot.">
+    <meta name="author" content="Ghislain Nkagou">
+    <title th:utext="${title}"></title>
+
+    <!-- Include CSS block -->
+    <th:block th:include="/main/layout/block_css"></th:block>
+
+</head>
+<body>
+
+<!-- Include MENU block -->
+<th:block th:include="/main/_menu"></th:block>
+
+
+<!-- page content -->
+<br>
+
+<div class="card mx-auto" style="width: 50rem">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-8">
+                <h3><span class="badge badge-info">Editer</span> <span th:text ="${role.roleName}" class="badge badge-secondary"></span></h3>
+            </div>
+
+            <div class="col-md-4 page-action text-right">
+                <a th:href="@{/admin/roles}" class="btn btn-default btn-sm"> <i class="material-icons">backspace</i> Retour</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <form th:action="@{/admin/roles/save}" method="post">
+
+                                <!-- Nom Client Form Input -->
+                                <!--<div class="form-group row">
+                                    <label for="client_id" class="col-sm-4 col-form-label text-md-right"><strong>Nom</strong></label>
+
+                                    <div class="col-md-6">
+                                        <input id="client_id" type="text" class="form-control" name="name" th:value="${client.client_id}" readonly autofocus>
+                                    </div>
+                                </div>-->
+                                <input th:field="${role.roleId}" type="hidden"/>
+                                <!-- Nom Client Form Input -->
+                                <div class="form-group row">
+                                    <label for="name" class="col-sm-4 col-form-label text-md-right"><strong>Rôle</strong></label>
+
+                                    <div class="col-md-6">
+                                        <input id="name" type="text" class="form-control" name="name" th:field="${role.roleName}"  autofocus>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row">
+                                    <label for="contact" class="col-sm-4 col-form-label text-md-right"><strong></strong></label>
+                                    <div class="col-md-6">
+                                        <button id="contact" type="submit" class="btn btn-primary">Enregister</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- page content -->
+
+
+<!-- Include END MENU block -->
+<th:block th:include="/main/_end_menu"></th:block>
+
+
+
+<br/><br/>
+
+
+
+<!-- Include SCRIPT block -->
+<th:block th:include="/main/layout/block_script"></th:block>
+
+</body>
+</html>

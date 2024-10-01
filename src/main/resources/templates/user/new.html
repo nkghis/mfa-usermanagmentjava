@@ -1,0 +1,196 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Authentification Bootstrap 4 Spring Boot.">
+    <meta name="author" content="Ghislain Nkagou">
+    <title th:utext="${title}"></title>
+
+    <!-- Include CSS block -->
+    <th:block th:include="/main/layout/block_css"></th:block>
+
+</head>
+<body>
+
+<!-- Include MENU block -->
+<th:block th:include="/main/_menu"></th:block>
+
+
+<!-- page content -->
+<br>
+
+<div class="card mx-auto" style="width: 50rem">
+
+    <div class="card-header">
+        <div class="row">
+
+            <div class="col-md-8">
+                <h5><strong>Nouvel Utilisateur.</strong></h5>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+    <div class="card-body">
+        <!--<form th:action="@{/admin/users/save}" th:object="${monuser}"  method="post">-->
+        <form id="signupform" th:action="@{/admin/users/save}" th:object="${monuser}"  method="post">
+            <!-- Nom Client Form Input -->
+            <div  class="form-group row">
+                <label th:for="client_nom" class="col-sm-4 col-form-label text-md-right"><strong>Nom d'utilisateur</strong></label>
+
+                <div class="col-md-6">
+
+                    <input id="username" class="form-control" th:field="*{userName}" placeholder="Nom d'utilisateur" >
+                    <span th:errors="*{userName}"></span>
+                    <div id="msg"></div>
+                    <!--<span>test</span>-->
+                </div>
+            </div>
+
+            <div  class="form-group row">
+                <label th:for="pwd" class="col-sm-4 col-form-label text-md-right"><strong>Mot de passe</strong></label>
+
+                <div class="col-md-6">
+
+                    <input id="pwd" type="password" class="form-control" th:field="*{encrytedPassword}" placeholder="Mot de passe"  >
+                    <span th:errors="*{encrytedPassword}"></span>
+                    <!--<div id="msg"></div>-->
+                    <!--<span>test</span>-->
+                </div>
+            </div>
+
+            <div  class="form-group row">
+                <label th:for="pwd_conf" class="col-sm-4 col-form-label text-md-right"><strong>Confirmation</strong></label>
+
+                <div class="col-md-6">
+
+                    <input id="pwd_conf" class="form-control" type="password" placeholder="Confirmation mot de passe"   >
+                    <!--<span th:errors="*{Encryted_Password}"></span>-->
+                    <div id="pwd_msg"></div>
+                    <!--<span>test</span>-->
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label th:for="role" class="col-sm-4 col-form-label text-md-right"><strong>Rôles</strong></label>
+                <div class="col-md-6">
+                    <select multiple class="form-control" id="role" name="role" required>
+                        <option th:each="c:${roles}" th:value="${c.roleId}" th:text="${c.roleName}"></option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+                <label for="btn" class="col-sm-4 col-form-label text-md-right"><strong></strong></label>
+
+                <div class="col-md-6">
+                    <button id="btn" type="submit" class="btn btn-primary">Enregister</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+</div>
+
+
+
+
+
+<!-- page content -->
+
+
+<!-- Include END MENU block -->
+<th:block th:include="/main/_end_menu"></th:block>
+
+
+
+<br/><br/>
+
+
+
+<!-- Include SCRIPT block -->
+<th:block th:include="/main/layout/block_script"></th:block>
+<script type="text/javascript">
+    $(document).ready(function() {
+        
+        $("#username").on("blur", function(e) {
+            $('#msg').hide();
+            if ($('#username').val() == null || $('#username').val() == "") {
+                $('#msg').show();
+                $("#msg").html("Le nom d'utilisateur est obligatoire.").css("color", "red");
+                $("#pwd").prop("disabled", true);
+                $("#pwd_conf").prop("disabled", true);
+                $("#btn").prop("disabled", true);
+            } else {
+                var username = $('#username').val();
+                $.ajax({
+                    type: "GET",
+                    /*url: "http://localhost:8088/admin/users/finByUsername/"+username,*/
+                    url: "/admin/users/finByUsername/"+username,
+                    cache: false,
+                    success: function(msg) {
+                        if (msg == true) {
+
+                            var messsage = "<span style=\"color:red;\">Nom d'utilisateur indisponible</span>";
+                            $('#msg').show();
+                            $("#msg").html(messsage);
+                            $("#pwd").prop("disabled", true);
+                            $("#pwd_conf").prop("disabled", true);
+                            $("#btn").prop("disabled", true);
+                        }
+
+                        else {
+                            var mess = "<span style=\"color:green;\">Nom d'utilisateur disponible</span>";
+                            $('#msg').show();
+                            $("#msg").html(mess);
+                            $("#pwd").prop("disabled", false);
+                            $("#pwd_conf").prop("disabled", false);
+                            $("#btn").prop("disabled", true);
+                        }
+
+                      /*  $('#msg').show();
+                        $("#msg").html(msg);*/
+
+
+                        console.log(msg)
+                        //console.log(url)
+                    }
+                });
+            }
+        });
+        $("#pwd_conf").on("blur", function (e) {
+            $('#pwd_msg').hide();
+            var password = $('#pwd').val();
+            var confirmation = $('#pwd_conf').val();
+            if (confirmation != null || confirmation!= "" ){
+                if (password != confirmation){
+                    $('#pwd_msg').show();
+                    var mes = "<span style=\"color:red;\">Les mots de passe ne correspondent pas !!!</span>";
+                    $('#pwd_msg').html(mes);
+                    $('#btn').prop("disabled", true);
+                }
+
+                else {
+                    $('#btn').prop("disabled", false);
+                }
+            }
+
+            else {
+                $('#btn').prop("disabled", true);
+            }
+
+        })
+    });
+</script>
+</body>
+</html>

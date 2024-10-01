@@ -1,0 +1,73 @@
+<!--
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:utext="${title}"></title>
+</head>
+<body>
+&lt;!&ndash; Include _menu.html &ndash;&gt;
+<th:block th:include="main/_menu"></th:block>
+
+<h2>Admin Page</h2>
+<h3>Welcome :
+    <span th:utext="${#request.userPrincipal.name}"></span>
+</h3>
+<b>This is protected page!</b>
+
+<br/><br/>
+
+&lt;!&ndash;<div th:if="${userInfo != null}" th:utext="${userInfo}"></div>&ndash;&gt;
+
+</body>
+
+</html>-->
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Authentification Bootstrap 4 Spring Boot.">
+    <meta name="author" content="Ghislain Nkagou">
+    <title th:utext="${title}"></title>
+
+    <!-- Include CSS block -->
+    <th:block th:include="/main/layout/block_css"></th:block>
+
+</head>
+<body>
+
+<!-- Include MENU block -->
+<th:block th:include="/main/_menu"></th:block>
+
+
+<!-- page content -->
+
+
+<h2>Page Administrateur</h2>
+<h3>Bienvenue :
+    <span th:utext="${#request.userPrincipal.name}"></span>
+</h3>
+<b>This is protected page!</b>
+
+
+
+<!-- page content -->
+
+
+<!-- Include END MENU block -->
+<th:block th:include="/main/_end_menu"></th:block>
+
+
+
+<br/><br/>
+
+
+
+<!-- Include SCRIPT block -->
+<th:block th:include="/main/layout/block_script"></th:block>
+
+</body>
+</html>

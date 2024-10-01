@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Authentification Bootstrap 4 Spring Boot.">
+    <meta name="author" content="Ghislain Nkagou">
+    <title th:utext="${title}"></title>
+
+    <!-- Include CSS block -->
+    <th:block th:include="/main/layout/block_css"></th:block>
+
+</head>
+<body>
+
+<!-- Include MENU block -->
+<th:block th:include="/main/_menu"></th:block>
+
+
+<!-- page content -->
+<br>
+<!-- Message pour succes de l operation -->
+<p class="alert alert-success text-center h6"   role="alert" th:text="${messagesucces}" th:if="${messagesucces}"></p>
+<div class="card mx-auto" style="width: 50rem">
+
+    <div class="card-header">
+        <div class="row">
+
+            <div class="col-md-8">
+                <h5><strong>Liste des clients.</strong></h5>
+            </div>
+
+            <div class="col-md-4 page-action text-right">
+                <a th:href="@{/admin/users/new}" class="btn btn-sm btn-success pull-right"> <i class="material-icons">open_in_new</i> <b>Nouvel Utilisateur</b></a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div>
+            <div class="table-responsive">
+                <table class="table table-sm" id="index-client">
+                    <thead>
+                    <tr>
+                        <!--<th class="text-center">Id</th>-->
+                        <th class="text-center">Nom d'utilisateur</th>
+                        <th class="text-center">Rôles</th>
+                        <!--<th class="text-center">Rôles</th>-->
+                        <th class="text-center">Editer</th>
+                        <th class="text-center">Supprimer</th>
+
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each = "c:${listusers}">
+                        <!--<td th:text = "${c.userId}" class="text-center"></td>-->
+                        <td th:text = "${c.userName}" class="text-center"></td>
+
+                       <!-- <td th:each="d:${c.getUserRoles()}" th:text = "${d.getAppRole().getRoleName()}" class="text-center"></td>-->
+                        <td th:each="d:${c.getUserRoles()}" th:text = "${#strings.concat(d.getAppRole().getRoleName())}" class="text-center"></td>
+                        <!--<td  th:text = "${#strings.listJoin(c.userRoles[roleName], ',')}" class="text-center"></td>-->
+<!--                        <!--<td th:each="d:${c.getUserRoles()}" th:text = "${d.getAppRole().getRoleName()}" class="text-center"></td>-->
+                      <!--  <td th:each="d:${c.getUserRoles()}" th:text = "${#strings.)}" class="text-center"></td>&ndash;&gt;-->
+                       <!-- <td  th:text = "${c.getUserRoles().ge}" class="text-center"></td>-->
+                     <!--   <td th:each="d:${c.getUserRoles()}" th:text = "${#strings.listJoin(#messages.listMsg(d.getAppRole().getRoleName()), ',')}" class="text-center"></td>-->
+                      <!--  <td  th:text = "${#strings.listJoin(#messages.listMsg(c.userRoles.forEach()), ',')}" class="text-center"></td>-->
+    <!--                    <td th:each="d:${c.getUserRoles()}" th:text = "${#strings.join(d.getAppRole().getRoleName(),',')}" class="text-center"></td>-->
+                        <!--<td th:each="d:${c.getUserRoles()}" th:text = "${d.getAppRole().getRoleName().toString()}" class="text-center"></td>-->
+                        <!--<td th:text = "${c.userRoles.forEach(p->p.)}" class="text-center"></td>-->
+                       <td class="text-center"><a href="#" class="btn btn-primary btn-sm" ><i class="material-icons">edit</i>Editer</a></td>
+                        <td class="text-center"><a onclick="return confirm('Êtes vous sûre !!!')" href="#"  class="btn btn-danger btn-sm"><i class="material-icons">delete_forever</i>Supprimer</a></td>
+
+
+                    </tr>
+
+                    </tbody>
+                    <tfoot>
+
+                    </tfoot>
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+<!-- page content -->
+
+
+<!-- Include END MENU block -->
+<th:block th:include="/main/_end_menu"></th:block>
+
+
+
+<br/><br/>
+
+
+
+<!-- Include SCRIPT block -->
+<th:block th:include="/main/layout/block_script"></th:block>
+
+</body>
+</html>

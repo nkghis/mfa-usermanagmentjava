@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Authentification Bootstrap 4 Spring Boot.">
+    <meta name="author" content="Ghislain Nkagou">
+    <title th:utext="${title}"></title>
+
+    <!-- Include CSS block -->
+    <th:block th:include="/main/layout/block_css"></th:block>
+
+</head>
+<body>
+
+<!-- Include MENU block -->
+<th:block th:include="/main/_menu"></th:block>
+
+
+<!-- page content -->
+<br>
+
+
+<div class="card mx-auto" style="width: 50rem">
+    <div class="card-header">
+        <div class="row">
+
+            <div class="col-md-8">
+                <h5><strong>Nouveau Rôle</strong></h5>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+    <div class="card-body">
+        <form th:action="@{/admin/roles/save}" th:object="${monrole}"  method="post">
+            <!-- Nom Client Form Input -->
+            <div  class="form-group row">
+                <label th:for="role" class="col-sm-4 col-form-label text-md-right"><strong>Rôle</strong></label>
+
+                <div class="col-md-6">
+
+                    <input id="role"  class="form-control" th:field="*{roleName}"  >
+                    <span th:errors="*{roleName}"></span>
+                    <!--<span>test</span>-->
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <label for="btn" class="col-sm-4 col-form-label text-md-right"><strong></strong></label>
+
+                <div class="col-md-6">
+                    <button id="btn" type="submit" class="btn btn-primary">Enregister</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+<!-- page content -->
+
+
+<!-- Include END MENU block -->
+<th:block th:include="/main/_end_menu"></th:block>
+
+
+
+<br/><br/>
+
+
+
+<!-- Include SCRIPT block -->
+<th:block th:include="/main/layout/block_script"></th:block>
+
+</body>
+</html>
